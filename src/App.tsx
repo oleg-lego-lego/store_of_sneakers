@@ -3,6 +3,13 @@ import React from 'react';
 function App() {
     return (
         <div className="wrapper clear">
+
+            <div className="overlay">
+                <div className="drawer">
+
+                </div>
+            </div>
+
             <header>
                 <div className={"headerLeft"}>
                     <img width={40} height={40} src="/img/logo.png" alt="logo"/>
@@ -23,7 +30,7 @@ function App() {
                 </ul>
             </header>
             <div className="content">
-                <div>
+                <div className={"titleSearch"}>
                     <h1>Все кроссовки</h1>
                     <div className="searchBlock">
                         <img src="/img/search.svg" alt="search"/>
@@ -34,6 +41,10 @@ function App() {
 
                 <div className="sneakers">
                     <div className="card">
+                        <div className="favorite">
+                            <img src="/img/heart_unliked.svg" alt="unliked"/>
+                        </div>
+
                         <img width={133} height={112} src={'/img/sneakers/1.jpg'} alt={'sneakers'}/>
                         <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
                         <div className={"cardButton"}>
