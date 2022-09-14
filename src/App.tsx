@@ -3,8 +3,7 @@ import React from 'react';
 function App() {
     return (
         <div className="wrapper clear">
-
-            <div className="overlay">
+            <div style={{display: 'none'}} className="overlay">
                 <div className="drawer">
 
                     <h2>Корзина  <img className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/></h2>
