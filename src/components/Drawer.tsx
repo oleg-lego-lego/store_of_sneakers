@@ -5,7 +5,7 @@ export const Drawer = () => {
         <div style={{display: 'none'}} className="overlay">
             <div className="drawer">
 
-                <h2>Корзина <img className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/></h2>
+                <h2>Корзина <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/></h2>
 
                 <div className="items">
                     <div className="cartItems">
@@ -17,7 +17,7 @@ export const Drawer = () => {
                             <p>Мужские Кроссовки Nike Air Max 270</p>
                             <b>12 999 руб.</b>
                         </div>
-                        <img className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                        <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
                     </div>
                     <div className="cartItems">
 
@@ -28,7 +28,7 @@ export const Drawer = () => {
                             <p>Мужские Кроссовки Nike Air Max 270</p>
                             <b>12 999 руб.</b>
                         </div>
-                        <img className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                        <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@ export const Drawer = () => {
                             <b>1074 руб.</b>
                         </li>
                     </ul>
-                    <button className={"greenButton"}>Оформить заказ <img src="/img/arrow.svg" alt="arrow"/></button>
+                    <button className={"greenButton"}>Оформить заказ <img src="/src/img/img/arrow.svg" alt="arrow"/></button>
                 </div>
             </div>
         </div>
