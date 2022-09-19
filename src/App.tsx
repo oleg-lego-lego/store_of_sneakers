@@ -22,7 +22,6 @@ function App() {
                     </div>
                 </div>
 
-
                 <div className="sneakers">
                     {arr.map(el => <Card title={el.title} price={el.price} imageURL={el.imageURL}/>)}
 

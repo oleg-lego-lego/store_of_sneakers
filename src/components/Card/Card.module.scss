@@ -5,6 +5,10 @@
   border-radius: 40px;
   transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 
+  .plus {
+    cursor: pointer;
+  }
+
   &:hover {
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.06);
     transform: translateY(-5px);
@@ -42,12 +46,12 @@
   flex-direction: column;
 }
 
-.button {
-  box-sizing: border-box;
-  background: #ffffff;
-  border: 1px solid #f2f2f2;
-  border-radius: 8px;
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-}
+//.button {
+//  box-sizing: border-box;
+//  background: #ffffff;
+//  border: 1px solid #f2f2f2;
+//  border-radius: 8px;
+//  height: 32px;
+//  width: 32px;
+//  cursor: pointer;
+//}

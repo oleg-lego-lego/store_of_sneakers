@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Card.module.scss'
 
 type CardPropsType = {
@@ -8,7 +8,16 @@ type CardPropsType = {
 }
 
 export const Card = (props: CardPropsType) => {
-    const onClickButton = () => {alert(123)}
+    const [isAdded, setIsAdded] = useState(false)
+
+    const onClickPlus = () => {
+        setIsAdded(!isAdded)
+    }
+
+    useEffect(()=>{
+
+    }, [isAdded])
+
 
     return (
         <div className={s.card}>
@@ -23,9 +32,7 @@ export const Card = (props: CardPropsType) => {
                     <span>Цена:</span>
                     <b>{props.price}</b>
                 </div>
-                <button className={s.button} onClick={onClickButton}>
-                    <img width={11} height={11} src={'/img/plus.svg'} alt={'plus'}/>
-                </button>
+                <img className={s.plus} onClick={onClickPlus} src={isAdded ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
             </div>
         </div>
     );
