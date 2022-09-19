@@ -7,10 +7,14 @@ type CardPropsType = {
 }
 
 export const Card = (props: CardPropsType) => {
+    const onClickButton = () => {
+        alert(123)
+    }
+
     return (
         <div className="card">
             <div className="favorite">
-                <img src="/src/img/img/heart_unliked.svg" alt="unliked"/>
+                <img src="../img/heart_unliked.svg" alt="unliked"/>
             </div>
 
             <img width={133} height={112} src={props.imageURL} alt={'sneakers'}/>
@@ -20,7 +24,7 @@ export const Card = (props: CardPropsType) => {
                     <span>Цена:</span>
                     <b>{props.price}</b>
                 </div>
-                <button className={"button"}>
+                <button className={"button"} onClick={onClickButton}>
                     <img width={11} height={11} src={'/img/plus.svg'} alt={'plus'}/>
                 </button>
             </div>
