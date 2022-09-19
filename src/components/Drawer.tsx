@@ -1,11 +1,17 @@
 import React from 'react';
 
-export const Drawer = () => {
+type DrawerPropsType = {
+    onClose: any
+}
+
+export const Drawer = (props: DrawerPropsType) => {
     return (
-        <div style={{display: 'none'}} className="overlay">
+        <div className="overlay">
             <div className="drawer">
 
-                <h2>Корзина <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/></h2>
+                <h2>Корзина
+                    <img onClick={props.onClose} className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                </h2>
 
                 <div className="items">
                     <div className="cartItems">

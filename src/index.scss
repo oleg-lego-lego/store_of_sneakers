@@ -51,9 +51,12 @@ header {
     align-items: center;
   }
 
+  li {
+    cursor: pointer;
+  }
+
   img {
     margin-right: 15px;
-    cursor: pointer;
   }
 
   h3 {

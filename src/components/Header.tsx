@@ -1,6 +1,10 @@
 import React from 'react';
 
-export const Header = () => {
+type HeaderPropsType = {
+    onClickKart: any
+}
+
+export const Header = (props: HeaderPropsType) => {
     return (
         <header>
             <div className={"headerLeft"}>
@@ -12,7 +16,7 @@ export const Header = () => {
             </div>
 
             <ul className={"headerRight"}>
-                <li>
+                <li onClick={props.onClickKart}>
                     <img width={18} height={18} src="../img/cart.svg" alt="cart"/>
                     <span>1205 руб</span>
                 </li>
