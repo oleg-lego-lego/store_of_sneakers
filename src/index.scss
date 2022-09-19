@@ -33,7 +33,7 @@ body {
 
 .wrapper {
   background: #FFFFFF;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   max-width: 1080px;
   margin: 50px auto;
@@ -80,60 +80,6 @@ header {
   h1 {
     margin: 0;
   }
-}
-
-.card {
-  border: 1px solid #f3f3f3;
-  padding: 20px;
-  width: 220px;
-  border-radius: 40px;
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-
-  &:hover {
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.06);
-    transform: translateY(-5px);
-  }
-
-  .favorite {
-    position: absolute;
-    cursor: pointer;
-  }
-
-  span {
-    font-size: 13px;
-    text-transform: uppercase;
-    opacity: 0.5;
-  }
-
-  b {
-    font-size: 13px;
-  }
-
-  h5 {
-    font-weight: 400;
-    font-size: 14px;
-  }
-}
-
-.cardButton {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cardPriсe {
-  display: flex;
-  flex-direction: column;
-}
-
-.button {
-  box-sizing: border-box;
-  background: #FFFFFF;
-  border: 1px solid #F2F2F2;
-  border-radius: 8px;
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
 }
 
 .sneakers {
