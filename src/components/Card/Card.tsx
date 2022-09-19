@@ -37,3 +37,6 @@ export const Card = (props: CardPropsType) => {
         </div>
     );
 };
+
+
+
