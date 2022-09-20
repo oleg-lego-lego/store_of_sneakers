@@ -16,7 +16,7 @@ const arr = [
 
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
-    const [cartItems, setCartItems] = useState<ItemsType[]>(arr)
+    const [cartItems, setCartItems] = useState<ItemsType[]>([])
 
     const [cartOpened, setCartOpened] = useState(false)
 
@@ -29,6 +29,10 @@ function App() {
                 setItems(json)
             })
     }, [])
+
+    const onAddToCart = (obj: ItemsType) => {
+        setCartItems(prev => [...prev, obj])
+    }
 
     return (
         <div className="wrapper clear">
@@ -44,7 +48,7 @@ function App() {
                 </div>
 
                 <div className="sneakers">
-                    {items.map(el => <Card title={el.title} price={el.price} imageURL={el.imageURL}/>)}
+                    {items.map(el => <Card title={el.title} price={el.price} imageURL={el.imageURL} onPlus={(obj) => onAddToCart(el)}/>)}
 
                 </div>
             </div>
