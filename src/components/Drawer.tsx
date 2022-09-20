@@ -1,6 +1,7 @@
 import React from 'react';
 import {ItemsType} from "../App";
 
+
 type DrawerPropsType = {
     onClose: any
     items: any

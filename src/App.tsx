@@ -2,6 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
+import axios from "axios"
 
 export type ItemsType = {
     imageURL: string
@@ -32,16 +33,20 @@ function App() {
     const [cartOpened, setCartOpened] = useState(false)
 
     useEffect(() => {
-        fetch('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
-            .then(res => {
-                return res.json()
-            })
-            .then(json => {
-                setItems(json)
-            })
+        // fetch('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
+        //     .then(res => {
+        //         return res.json()
+        //     })
+        //     .then(json => {
+        //         setItems(json)
+        //     })
+        axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
+            .then(res => setItems(res.data))
     }, [])
 
     const onAddToCart = (obj: ItemsType) => {
+        axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', obj)
+            .then(() => {})
         setCartItems(prev => [...prev, obj])
     }
 
