@@ -58,7 +58,7 @@ function App() {
                     <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кроссовки'}</h1>
                     <div className="searchBlock">
                         <img src="./img/search.svg" alt="search"/>
-                        <img className={"removeBtn clear"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                        {searchValue && <img onClick={() => setSearchValue('')} className={"removeBtn clear"} src="/img/btn_remove.svg" alt="btn_remove"/>}
                         <input onChange={onChangeSearchInput} value={searchValue} placeholder={'Поиск...'}/>
                     </div>
                 </div>
