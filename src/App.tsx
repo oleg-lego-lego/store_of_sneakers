@@ -42,6 +42,10 @@ function App() {
         //     })
         axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
             .then(res => setItems(res.data))
+
+        axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
+            .then(res => setCartItems(res.data))
+
     }, [])
 
     const onAddToCart = (obj: ItemsType) => {
