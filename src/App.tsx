@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
@@ -27,6 +27,7 @@ const arr = [
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
     const [cartItems, setCartItems] = useState<ItemsType[]>([])
+    const [searchValue, setSearchValue] = useState('')
 
     const [cartOpened, setCartOpened] = useState(false)
 
@@ -44,21 +45,31 @@ function App() {
         setCartItems(prev => [...prev, obj])
     }
 
+    const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.currentTarget.value)
+    }
+
     return (
         <div className="wrapper clear">
             {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)}/>}
             <Header onClickKart={() => setCartOpened(true)}/>
             <div className="content">
                 <div className={"titleSearch"}>
-                    <h1>Все кроссовки</h1>
+                    <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кроссовки'}</h1>
                     <div className="searchBlock">
                         <img src="./img/search.svg" alt="search"/>
-                        <input placeholder={'Поиск...'}/>
+                        <img className={"removeBtn clear"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                        <input onChange={onChangeSearchInput} value={searchValue} placeholder={'Поиск...'}/>
                     </div>
                 </div>
 
                 <div className="sneakers">
-                    {items.map(el => <Card title={el.title} price={el.price} imageURL={el.imageURL} onPlus={(obj) => onAddToCart(el)}/>)}
+                    {items.map((el,index) =>
+                        <Card
+                            key={index} title={el.title}
+                            price={el.price} imageURL={el.imageURL}
+                            onPlus={(obj) => onAddToCart(el)}
+                        />)}
 
                 </div>
             </div>
