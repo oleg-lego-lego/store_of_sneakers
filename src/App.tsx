@@ -64,7 +64,8 @@ function App() {
                 </div>
 
                 <div className="sneakers">
-                    {items.map((el,index) =>
+                    {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+                        .map((el,index) =>
                         <Card
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
