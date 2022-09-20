@@ -5,24 +5,25 @@ import {Drawer} from "./components/Drawer";
 import axios from "axios"
 
 export type ItemsType = {
+    id: string
     imageURL: string
     title: string
     price: number
 }
 
 const arr = [
-    {"title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 12999, "imageURL": "img/sneakers/1.jpg"},
-    {"title": "Мужские Кроссовки Nike Air Max 270", "price": 12999, "imageURL": "img/sneakers/2.jpg"},
-    {"title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/3.jpg"},
-    {"title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/4.jpg"},
-    {"title": "Мужские Кроссовки Under Armour Curry 8", "price": 15199, "imageURL": "img/sneakers/5.jpg"},
-    {"title": "Мужские Кроссовки Nike Kyrie 7", "price": 11299, "imageURL": "img/sneakers/6.jpg"},
-    {"title": "Мужские Кроссовки Jordan Air Jordan 11", "price": 10799, "imageURL": "img/sneakers/7.jpg"},
-    {"title": "Мужские Кроссовки Nike LeBron XVIII", "price": 16499, "imageURL": "img/sneakers/8.jpg"},
-    {"title": "Мужские Кроссовки Nike Lebron XVIII Low", "price": 13999, "imageURL": "img/sneakers/9.jpg"},
-    {"title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/10.jpg"},
-    {"title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/11.jpg"},
-    {"title": "Мужские Кроссовки Nike Kyrie Flytrap IV", "price": 11299, "imageURL": "img/sneakers/12.jpg"},
+    {"id": "1", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 12999, "imageURL": "img/sneakers/1.jpg"},
+    {"id": "2", "title": "Мужские Кроссовки Nike Air Max 270", "price": 12999, "imageURL": "img/sneakers/2.jpg"},
+    {"id": "3", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/3.jpg"},
+    {"id": "4", "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/4.jpg"},
+    {"id": "5", "title": "Мужские Кроссовки Under Armour Curry 8", "price": 15199, "imageURL": "img/sneakers/5.jpg"},
+    {"id": "6", "title": "Мужские Кроссовки Nike Kyrie 7", "price": 11299, "imageURL": "img/sneakers/6.jpg"},
+    {"id": "7", "title": "Мужские Кроссовки Jordan Air Jordan 11", "price": 10799, "imageURL": "img/sneakers/7.jpg"},
+    {"id": "8", "title": "Мужские Кроссовки Nike LeBron XVIII", "price": 16499, "imageURL": "img/sneakers/8.jpg"},
+    {"id": "9", "title": "Мужские Кроссовки Nike Lebron XVIII Low", "price": 13999, "imageURL": "img/sneakers/9.jpg"},
+    {"id": "10", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/10.jpg"},
+    {"id": "11", "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/11.jpg"},
+    {"id": "12", "title": "Мужские Кроссовки Nike Kyrie Flytrap IV", "price": 11299, "imageURL": "img/sneakers/12.jpg"},
 ]
 
 function App() {
@@ -59,14 +60,14 @@ function App() {
     }
 
     const onRemoveItem = (id: string) => {
-        axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
-            .then(() => {})
-        //setCartItems(prev => [...prev, obj])
+        // axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
+        //     .then(() => {})
+        setCartItems(prev => prev.filter(item => item.id !== id))
     }
 
     return (
         <div className="wrapper clear">
-            {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)}/>}
+            {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
             <Header onClickKart={() => setCartOpened(true)}/>
             <div className="content">
                 <div className={"titleSearch"}>
@@ -82,6 +83,7 @@ function App() {
                     {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
                         .map((el,index) =>
                         <Card
+                            id={el.id}
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
                             onPlus={(obj) => onAddToCart(el)}

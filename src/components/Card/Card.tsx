@@ -3,6 +3,7 @@ import s from './Card.module.scss'
 import {ItemsType} from "../../App";
 
 type CardPropsType = {
+    id: string
     title: string
     price: number
     imageURL: string
@@ -11,10 +12,10 @@ type CardPropsType = {
 }
 
 export const Card: FC<CardPropsType> = (
-    {title, price, imageURL,onFavorite,onPlus }) => {
+    {title, price, imageURL,id,onFavorite,onPlus }) => {
     const [isAdded, setIsAdded] = useState(false)
 
-    const obj = {imageURL, title, price}
+    const obj = {imageURL, title, price, id}
 
     const onClickPlus = () => {
         if(onPlus) {

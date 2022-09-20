@@ -7,7 +7,7 @@ type DrawerPropsType = {
     items: any
 }
 
-export const Drawer = ({ onClose, items }: { onClose: any; items: ItemsType[] }) => {
+export const Drawer = ({ onClose, items, onRemove }: { onClose: any; items: ItemsType[], onRemove: (id: string) => void }) => {
     return (
         <div className="overlay">
             <div className="drawer">
@@ -28,7 +28,7 @@ export const Drawer = ({ onClose, items }: { onClose: any; items: ItemsType[] })
                                     <p>{el.title}</p>
                                     <b>{(el.price)}</b>
                                 </div>
-                                <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
+                                <img onClick={() => onRemove(el.id)} className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
                             </div>
                         )
                     })}
