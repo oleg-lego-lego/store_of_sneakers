@@ -58,6 +58,12 @@ function App() {
         setSearchValue(e.currentTarget.value)
     }
 
+    const onRemoveItem = (id: string) => {
+        axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
+            .then(() => {})
+        //setCartItems(prev => [...prev, obj])
+    }
+
     return (
         <div className="wrapper clear">
             {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)}/>}
