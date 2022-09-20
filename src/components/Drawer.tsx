@@ -1,41 +1,36 @@
 import React from 'react';
+import {ItemsType} from "../App";
 
 type DrawerPropsType = {
     onClose: any
+    items: any
 }
 
-export const Drawer = (props: DrawerPropsType) => {
+export const Drawer = ({ onClose, items }: { onClose: any; items: ItemsType[] }) => {
     return (
         <div className="overlay">
             <div className="drawer">
 
-                <h2>Корзина
-                    <img onClick={props.onClose} className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/>
+                <h2>
+                    Корзина
+                    <img onClick={onClose} className={"removeBtn"} src="/img/btn_remove.svg" alt="btn_remove"/>
                 </h2>
 
                 <div className="items">
-                    <div className="cartItems">
+                    {items.map(el => {
+                        return (
+                            <div className="cartItems">
+                                <div style={{backgroundImage: `url(${el.imageURL})`}} className="cartItemImg"></div>
 
-                        <div style={{backgroundImage: 'url(/img/sneakers/1.jpg)'}} className="cartItemImg"></div>
-
-                        {/*<img className={"cartItem"} src="/img/sneakers/1.jpg" alt="sneakers"/>*/}
-                        <div className={"cartText"}>
-                            <p>Мужские Кроссовки Nike Air Max 270</p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
-                    </div>
-                    <div className="cartItems">
-
-                        <div style={{backgroundImage: 'url(/img/sneakers/1.jpg)'}} className="cartItemImg"></div>
-
-                        {/*<img className={"cartItem"} src="/img/sneakers/1.jpg" alt="sneakers"/>*/}
-                        <div className={"cartText"}>
-                            <p>Мужские Кроссовки Nike Air Max 270</p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
-                    </div>
+                                {/*<img className={"cartItem"} src="/img/sneakers/1.jpg" alt="sneakers"/>*/}
+                                <div className={"cartText"}>
+                                    <p>{el.title}</p>
+                                    <b>{(el.price)}</b>
+                                </div>
+                                <img className={"removeBtn"} src="/src/img/img/btn_remove.svg" alt="btn_remove"/>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className={"cartTotalBlock"}>

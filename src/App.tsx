@@ -16,6 +16,7 @@ const arr = [
 
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
+    const [cartItems, setCartItems] = useState<ItemsType[]>(arr)
 
     const [cartOpened, setCartOpened] = useState(false)
 
@@ -31,7 +32,7 @@ function App() {
 
     return (
         <div className="wrapper clear">
-            {cartOpened && <Drawer onClose={() => setCartOpened(false)}/>}
+            {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)}/>}
             <Header onClickKart={() => setCartOpened(true)}/>
             <div className="content">
                 <div className={"titleSearch"}>
