@@ -14,6 +14,11 @@ type CardPropsType = {
 export const Card: FC<CardPropsType> = (
     {title, price, imageURL,id,onFavorite,onPlus }) => {
     const [isAdded, setIsAdded] = useState(false)
+    const [isFavorite, setIsFavorite] = useState(false)
+
+    const onClickFavorite = () => {
+        setIsFavorite(!isFavorite)
+    }
 
     const obj = {imageURL, title, price, id}
 
@@ -32,7 +37,7 @@ export const Card: FC<CardPropsType> = (
     return (
         <div className={s.card}>
             <div className={s.favorite}>
-                <img src="../../img/heart_unliked.svg" alt="unliked"/>
+                <img onClick={onClickFavorite} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="unliked"/>
             </div>
 
             <img width={133} height={112} src={imageURL} alt={'sneakers'}/>
