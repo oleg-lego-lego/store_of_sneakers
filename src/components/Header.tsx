@@ -21,6 +21,9 @@ export const Header = (props: HeaderPropsType) => {
                     <span>1205 руб</span>
                 </li>
                 <li>
+                    <img width={18} height={18} src="../img/heart.svg" alt="закладки"/>
+                </li>
+                <li>
                     <img width={18} height={18} src="../img/user.svg" alt="user"/>
                 </li>
             </ul>

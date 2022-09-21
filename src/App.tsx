@@ -9,38 +9,32 @@ export type ItemsType = {
     imageURL: string
     title: string
     price: number
+    favorites: boolean
 }
 
 const arr = [
-    {"id": "1", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 12999, "imageURL": "img/sneakers/1.jpg"},
-    {"id": "2", "title": "Мужские Кроссовки Nike Air Max 270", "price": 12999, "imageURL": "img/sneakers/2.jpg"},
-    {"id": "3", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/3.jpg"},
-    {"id": "4", "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/4.jpg"},
-    {"id": "5", "title": "Мужские Кроссовки Under Armour Curry 8", "price": 15199, "imageURL": "img/sneakers/5.jpg"},
-    {"id": "6", "title": "Мужские Кроссовки Nike Kyrie 7", "price": 11299, "imageURL": "img/sneakers/6.jpg"},
-    {"id": "7", "title": "Мужские Кроссовки Jordan Air Jordan 11", "price": 10799, "imageURL": "img/sneakers/7.jpg"},
-    {"id": "8", "title": "Мужские Кроссовки Nike LeBron XVIII", "price": 16499, "imageURL": "img/sneakers/8.jpg"},
-    {"id": "9", "title": "Мужские Кроссовки Nike Lebron XVIII Low", "price": 13999, "imageURL": "img/sneakers/9.jpg"},
-    {"id": "10", "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/10.jpg"},
-    {"id": "11", "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/11.jpg"},
-    {"id": "12", "title": "Мужские Кроссовки Nike Kyrie Flytrap IV", "price": 11299, "imageURL": "img/sneakers/12.jpg"},
+    {"id": "1", "favorites": false, "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 12999, "imageURL": "img/sneakers/1.jpg"},
+    {"id": "2", "favorites": false, "title": "Мужские Кроссовки Nike Air Max 270", "price": 12999, "imageURL": "img/sneakers/2.jpg"},
+    {"id": "3", "favorites": false, "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/3.jpg"},
+    {"id": "4", "favorites": false, "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/4.jpg"},
+    {"id": "5", "favorites": false, "title": "Мужские Кроссовки Under Armour Curry 8", "price": 15199, "imageURL": "img/sneakers/5.jpg"},
+    {"id": "6", "favorites": false, "title": "Мужские Кроссовки Nike Kyrie 7", "price": 11299, "imageURL": "img/sneakers/6.jpg"},
+    {"id": "7", "favorites": false, "title": "Мужские Кроссовки Jordan Air Jordan 11", "price": 10799, "imageURL": "img/sneakers/7.jpg"},
+    {"id": "8", "favorites": false, "title": "Мужские Кроссовки Nike LeBron XVIII", "price": 16499, "imageURL": "img/sneakers/8.jpg"},
+    {"id": "9", "favorites": false, "title": "Мужские Кроссовки Nike Lebron XVIII Low", "price": 13999, "imageURL": "img/sneakers/9.jpg"},
+    {"id": "10", "favorites": false, "title": "Мужские Кроссовки Nike Blazer Mid Suede", "price": 8499, "imageURL": "img/sneakers/10.jpg"},
+    {"id": "11", "favorites": false, "title": "Кроссовки Puma X Aka Boku Future Rider", "price": 8999, "imageURL": "img/sneakers/11.jpg"},
+    {"id": "12", "favorites": false, "title": "Мужские Кроссовки Nike Kyrie Flytrap IV", "price": 11299, "imageURL": "img/sneakers/12.jpg"},
 ]
 
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
     const [cartItems, setCartItems] = useState<ItemsType[]>([])
     const [searchValue, setSearchValue] = useState('')
-
     const [cartOpened, setCartOpened] = useState(false)
+    const [favorites, setFavorites] = useState<ItemsType[]>([])
 
     useEffect(() => {
-        // fetch('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
-        //     .then(res => {
-        //         return res.json()
-        //     })
-        //     .then(json => {
-        //         setItems(json)
-        //     })
         axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
             .then(res => setItems(res.data))
 
@@ -65,6 +59,12 @@ function App() {
         setCartItems(prev => prev.filter(item => item.id !== id))
     }
 
+    const onAddToFavorite = (obj: ItemsType) => {
+        axios.post(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/`, obj)
+            .then(() => {})
+        setFavorites(prev => [...prev, obj])
+    }
+
     return (
         <div className="wrapper clear">
             {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
@@ -86,7 +86,9 @@ function App() {
                             id={el.id}
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
+                            favorites={el.favorites}
                             onPlus={(obj) => onAddToCart(el)}
+                            onFavorite={(obj) => onAddToFavorite(el)}
                         />)}
 
                 </div>

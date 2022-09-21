@@ -9,18 +9,22 @@ type CardPropsType = {
     imageURL: string
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
+    favorites: boolean
 }
 
 export const Card: FC<CardPropsType> = (
-    {title, price, imageURL,id,onFavorite,onPlus }) => {
+    {title, price, imageURL,id,favorites,onFavorite,onPlus }) => {
     const [isAdded, setIsAdded] = useState(false)
     const [isFavorite, setIsFavorite] = useState(false)
 
+    const obj = {imageURL, title, price, id, favorites}
+
     const onClickFavorite = () => {
+        if(onFavorite) {
+            onFavorite(obj)
+        }
         setIsFavorite(!isFavorite)
     }
-
-    const obj = {imageURL, title, price, id}
 
     const onClickPlus = () => {
         if(onPlus) {
@@ -32,7 +36,6 @@ export const Card: FC<CardPropsType> = (
     useEffect(()=>{
 
     }, [isAdded])
-
 
     return (
         <div className={s.card}>
