@@ -146,13 +146,17 @@ function App() {
         <div className="wrapper clear">
             {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
             <Header onClickKart={() => setCartOpened(true)}/>
+
             <Routes>
-                <Route path="/">
+
+                <Route path={"/"} element={
                     <Home items={items} searchValue={searchValue} setSearchValue={setSearchValue}
                           onChangeSearchInput={onChangeSearchInput}
                           onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart}/>
-                </Route>
-                <Route path={'/favorites'} element={<Favorites />}/>
+                }/>
+
+                <Route path={'/favorites'} element={<Favorites/>}/>
+
             </Routes>
 
 

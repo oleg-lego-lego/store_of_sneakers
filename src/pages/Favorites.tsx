@@ -1,5 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
-import {ItemsType} from "../App";
+import React, {FC} from 'react';
 
 type FavoritesPropsType = {
 
