@@ -33,9 +33,9 @@ export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onC
                             id={el.id}
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
-                            favorites={el.favorites}
                             onPlus={(obj) => onAddToCart(el)}
                             onFavorite={(obj) => onAddToFavorite(el)}
+                            favorited={true}
                         />
                     )}
             </div>

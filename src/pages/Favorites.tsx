@@ -1,26 +1,32 @@
 import React, {FC} from 'react';
+import {ItemsType} from "../App";
+import {Card} from "../components/Card/Card";
 
 type FavoritesPropsType = {
-
+    items: ItemsType[]
+    onFavorite: (obj: ItemsType) => void
 }
 
-export const Favorites: FC<FavoritesPropsType> = ({}) => {
+export const Favorites: FC<FavoritesPropsType> = ({items,onFavorite}) => {
     return (
 
         <div className="content">
             <div className={"titleSearch"}>
                 <h1>Мои закладки</h1>
-                {/*<div className="searchBlock">*/}
-                {/*    <img src="./img/search.svg" alt="search"/>*/}
-                {/*    {searchValue &&*/}
-                {/*    <img onClick={() => setSearchValue('')} className={"removeBtn clear"} src="/img/btn_remove.svg"*/}
-                {/*         alt="btn_remove"/>}*/}
-                {/*    <input onChange={onChangeSearchInput} value={searchValue} placeholder={'Поиск...'}/>*/}
-                {/*</div>*/}
             </div>
 
             <div className="sneakers">
-                tut
+                {items
+                    .map((el, index) =>
+                        <Card
+                            id={el.id}
+                            key={index} title={el.title}
+                            price={el.price} imageURL={el.imageURL}
+                            favorited={true}
+                            // onPlus={(obj) => onAddToCart(el)}
+                            onFavorite={onFavorite}
+                        />
+                    )}
             </div>
         </div>
     );
