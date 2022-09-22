@@ -9,7 +9,7 @@ type CardPropsType = {
     imageURL: string
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
-    favorited: boolean
+    favorited?: boolean
     }
 
 export const Card: FC<CardPropsType> = (
