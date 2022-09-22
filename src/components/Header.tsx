@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
 type HeaderPropsType = {
     onClickKart: any
@@ -7,13 +8,16 @@ type HeaderPropsType = {
 export const Header = (props: HeaderPropsType) => {
     return (
         <header>
-            <div className={"headerLeft"}>
-                <img width={40} height={40} src="../img/logo.png" alt="logo"/>
-                <div>
-                    <h3>React Sneakers</h3>
-                    <p>Магазин лучших кроссовок</p>
+            <NavLink to="/">
+                <div className={"headerLeft"}>
+                    <img width={40} height={40} src="../img/logo.png" alt="logo"/>
+                    <div>
+                        <h3>React Sneakers</h3>
+                        <p>Магазин лучших кроссовок</p>
+                    </div>
                 </div>
-            </div>
+            </NavLink>
+
 
             <ul className={"headerRight"}>
                 <li onClick={props.onClickKart}>
@@ -21,7 +25,9 @@ export const Header = (props: HeaderPropsType) => {
                     <span>1205 руб</span>
                 </li>
                 <li>
-                    <img width={18} height={18} src="../img/heart.svg" alt="закладки"/>
+                    <NavLink to="/favorites">
+                        <img width={18} height={18} src="../img/heart.svg" alt="закладки"/>
+                    </NavLink>
                 </li>
                 <li>
                     <img width={18} height={18} src="../img/user.svg" alt="user"/>
