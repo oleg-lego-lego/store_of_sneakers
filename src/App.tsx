@@ -120,10 +120,21 @@ function App() {
     }, [])
 
     const onAddToCart = (obj: ItemsType) => {
-        axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', obj)
-            .then(() => {
-            })
-        setCartItems(prev => [...prev, obj])
+        try {
+            if (cartItems.find(el => Number(el.id) === Number(obj.id))) {
+                axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${obj.id}`)
+                    .then(() => {
+                    })
+                setCartItems(prev => prev.filter(el => Number(el.id) !== Number(obj.id)))
+            } else {
+                axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', obj)
+                    .then(() => {
+                    })
+                setCartItems(prev => [...prev, obj])
+            }
+        } catch (e) {
+
+        }
     }
 
     const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {

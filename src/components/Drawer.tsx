@@ -23,7 +23,7 @@ export const Drawer = ({onClose, items, onRemove}: { onClose: any; items: ItemsT
                             <div className="items">
                                 {items.map(el => {
                                     return (
-                                        <div className="cartItems">
+                                        <div key={el.id} className="cartItems">
                                             <div style={{backgroundImage: `url(${el.imageURL})`}}
                                                  className="cartItemImg"></div>
 

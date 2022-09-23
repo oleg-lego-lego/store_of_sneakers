@@ -10,10 +10,10 @@ type CardPropsType = {
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
     favorited?: boolean
-    }
+}
 
 export const Card: FC<CardPropsType> = (
-    {title, price, imageURL,id,onFavorite,onPlus,favorited = false }) => {
+    {title, price, imageURL, id, onFavorite, onPlus, favorited = false}) => {
     const [isAdded, setIsAdded] = useState(false)
     const [isFavorite, setIsFavorite] = useState(favorited)
 
@@ -22,20 +22,20 @@ export const Card: FC<CardPropsType> = (
     const obj = {imageURL, title, price, id}
 
     const onClickFavorite = () => {
-        if(onFavorite) {
+        if (onFavorite) {
             onFavorite(obj)
         }
         setIsFavorite(!isFavorite)
     }
 
     const onClickPlus = () => {
-        if(onPlus) {
+        if (onPlus) {
             onPlus(obj)
         }
         setIsAdded(!isAdded)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
     }, [isAdded])
 
@@ -52,7 +52,8 @@ export const Card: FC<CardPropsType> = (
                     <span>Цена:</span>
                     <b>{price}</b>
                 </div>
-                <img className={s.plus} onClick={onClickPlus} src={isAdded ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
+                <img className={s.plus} onClick={onClickPlus}
+                     src={isAdded ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
             </div>
         </div>
     );
