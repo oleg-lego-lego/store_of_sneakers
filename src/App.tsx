@@ -150,13 +150,13 @@ function App() {
 
     const onAddToFavorite = async (obj: ItemsType) => {
         try {
-            if (favorites.find(el=> el.id === obj.id)) {
+            if (favorites.find(el => el.id === obj.id)) {
                 axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/${obj.id}`)
                     .then(() => {
                     })
                 //setFavorites(prev => prev.filter(item => item.id !== obj.id))
             } else {
-                const {data}  = await axios.post(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/`, obj)
+                const {data} = await axios.post(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/`, obj)
                 setFavorites((prev) => [...prev, data])
             }
         } catch (e) {
@@ -177,6 +177,7 @@ function App() {
                         setSearchValue={setSearchValue}
                         onChangeSearchInput={onChangeSearchInput}
                         onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart}
+                        cartItems={cartItems}
                     />
                 }/>
 

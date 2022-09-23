@@ -9,11 +9,11 @@ type HomePropsType = {
     onChangeSearchInput: (e: ChangeEvent<HTMLInputElement>) => void
     onAddToFavorite: (obj: ItemsType) => void
     onAddToCart: (obj: ItemsType) => void
+    cartItems: ItemsType[]
 }
 
-export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart}) => {
+export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems}) => {
     return (
-
         <div className="content">
             <div className={"titleSearch"}>
                 <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кроссовки'}</h1>
@@ -36,6 +36,7 @@ export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onC
                             onPlus={(obj) => onAddToCart(el)}
                             onFavorite={(obj) => onAddToFavorite(el)}
                             //favorited={true}
+                            added={cartItems.some(f => Number(f.id) === Number(f.id))}
                         />
                     )}
             </div>

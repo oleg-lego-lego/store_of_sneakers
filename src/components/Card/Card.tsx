@@ -10,11 +10,13 @@ type CardPropsType = {
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
     favorited?: boolean
+    added?: boolean
 }
 
 export const Card: FC<CardPropsType> = (
-    {title, price, imageURL, id, onFavorite, onPlus, favorited = false}) => {
-    const [isAdded, setIsAdded] = useState(false)
+    {title, price, imageURL, id, onFavorite,
+        onPlus, favorited = false, added = false}) => {
+    const [isAdded, setIsAdded] = useState(added)
     const [isFavorite, setIsFavorite] = useState(favorited)
 
     //liked unliked fixed
