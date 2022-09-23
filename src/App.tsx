@@ -108,15 +108,17 @@ function App() {
     const [favorites, setFavorites] = useState<ItemsType[]>([])
 
     useEffect(() => {
-        axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
-            .then(res => setItems(res.data))
+        async function fetchData() {
+            const cartResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
+            const favoritesResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites')
+            const itemsResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
 
-        axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
-            .then(res => setCartItems(res.data))
-
-        axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites')
-            .then(res => setFavorites(res.data))
-
+            setCartItems(cartResponse.data)
+            setFavorites(favoritesResponse.data)
+            setItems(itemsResponse.data)
+        }
+        fetchData()
+        //fetchData()
     }, [])
 
     const onAddToCart = (obj: ItemsType) => {
