@@ -1,15 +1,14 @@
 import React, {FC, useContext} from 'react';
-import {ItemsType} from "../App";
 import {Card} from "../components/Card/Card";
 import {AppContext} from "../context/AppContext";
 
 type FavoritesPropsType = {
     //items: ItemsType[]
-    onFavorite: (obj: ItemsType) => void
+    //onFavorite: (obj: ItemsType) => void
 }
 
-export const Favorites: FC<FavoritesPropsType> = ({onFavorite}) => {
-    const {favorites} = useContext(AppContext)
+export const Favorites: FC<FavoritesPropsType> = () => {
+    const {favorites, onFavorite} = useContext(AppContext)
 
     return (
 

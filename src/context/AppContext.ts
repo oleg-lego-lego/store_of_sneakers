@@ -7,7 +7,7 @@ export type ContextTypes = {
     favorites: ItemsType[],
     cartItems: ItemsType[],
     isItemAdded: (id: string) => boolean
-    // onAddToFavorite: (obj: ItemsType) => void
+    onFavorite: (obj: ItemsType) => void
     // setCartOpened: (cartOpened:boolean) => void
     // setCartItems: ([]:ItemsType[]) => void
     // onAddToCart: (obj: ItemsType) => void

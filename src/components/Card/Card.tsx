@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import s from './Card.module.scss'
 import {ItemsType} from "../../App";
 import ContentLoader from "react-content-loader";
@@ -12,14 +12,16 @@ type CardPropsType = {
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
     favorited?: boolean
-    added?: boolean
+    // added?: boolean
     loading?: boolean
 }
 
 export const Card: FC<CardPropsType> = (
-    {title, price, imageURL, id, onFavorite,
-        onPlus, favorited = false, added = false,
-    loading = false }) => {
+    {
+        title, price, imageURL, id, onFavorite,
+        onPlus, favorited = false,
+        loading = false
+    }) => {
 
     //const [isAdded, setIsAdded] = useState(added)
     const [isFavorite, setIsFavorite] = useState(favorited)
@@ -70,7 +72,8 @@ export const Card: FC<CardPropsType> = (
                     :
                     <>
                         <div className={s.favorite}>
-                            <img onClick={onClickFavorite} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="unliked"/>
+                            <img onClick={onClickFavorite} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'}
+                                 alt="unliked"/>
                         </div>
 
                         <img width={'100%'} height={135} src={imageURL} alt={'sneakers'}/>
@@ -81,7 +84,8 @@ export const Card: FC<CardPropsType> = (
                                 <b>{price}</b>
                             </div>
                             <img className={s.plus} onClick={onClickPlus}
-                                 src={isItemAdded && isItemAdded(id) ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
+                                 src={isItemAdded && isItemAdded(id) ? '/img/btn_checked.svg' : '/img/btn_plus.svg'}
+                                 alt={'plus'}/>
                         </div>
                     </>
             }
