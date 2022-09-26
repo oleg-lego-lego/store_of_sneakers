@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, createContext, useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
@@ -100,7 +100,7 @@ const arr = [
     },
 ]
 
-
+const AppContext = createContext({})
 
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
@@ -122,6 +122,7 @@ function App() {
             setFavorites(favoritesResponse.data)
             setItems(itemsResponse.data)
         }
+
         fetchData()
         //fetchData()
     }, [])
@@ -172,57 +173,59 @@ function App() {
     }
 
     return (
-        <div className="wrapper clear">
-            {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
-            <Header onClickKart={() => setCartOpened(true)}/>
+        <AppContext.Provider value={''}>
+            <div className="wrapper clear">
+                {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
+                <Header onClickKart={() => setCartOpened(true)}/>
 
-            <Routes>
+                <Routes>
 
-                <Route path={"/"} element={
-                    <Home
-                        items={items} searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                        onChangeSearchInput={onChangeSearchInput}
-                        onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart}
-                        cartItems={cartItems}
-                        isLoading={isLoading}
-                    />
-                }/>
+                    <Route path={"/"} element={
+                        <Home
+                            items={items} searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onChangeSearchInput={onChangeSearchInput}
+                            onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart}
+                            cartItems={cartItems}
+                            isLoading={isLoading}
+                        />
+                    }/>
 
-                <Route path={'/favorites'} element={
-                    <Favorites
-                        items={favorites}
-                        onFavorite={onAddToFavorite}
-                    />}/>
+                    <Route path={'/favorites'} element={
+                        <Favorites
+                            items={favorites}
+                            onFavorite={onAddToFavorite}
+                        />}/>
 
-            </Routes>
+                </Routes>
 
 
-            {/*<div className="content">*/}
-            {/*    <div className={"titleSearch"}>*/}
-            {/*        <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кроссовки'}</h1>*/}
-            {/*        <div className="searchBlock">*/}
-            {/*            <img src="./img/search.svg" alt="search"/>*/}
-            {/*            {searchValue && <img onClick={() => setSearchValue('')} className={"removeBtn clear"} src="/img/btn_remove.svg" alt="btn_remove"/>}*/}
-            {/*            <input onChange={onChangeSearchInput} value={searchValue} placeholder={'Поиск...'}/>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
+                {/*<div className="content">*/}
+                {/*    <div className={"titleSearch"}>*/}
+                {/*        <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кроссовки'}</h1>*/}
+                {/*        <div className="searchBlock">*/}
+                {/*            <img src="./img/search.svg" alt="search"/>*/}
+                {/*            {searchValue && <img onClick={() => setSearchValue('')} className={"removeBtn clear"} src="/img/btn_remove.svg" alt="btn_remove"/>}*/}
+                {/*            <input onChange={onChangeSearchInput} value={searchValue} placeholder={'Поиск...'}/>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
 
-            {/*    <div className="sneakers">*/}
-            {/*        {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))*/}
-            {/*            .map((el,index) =>*/}
-            {/*            <Card*/}
-            {/*                id={el.id}*/}
-            {/*                key={index} title={el.title}*/}
-            {/*                price={el.price} imageURL={el.imageURL}*/}
-            {/*                favorites={el.favorites}*/}
-            {/*                onPlus={(obj) => onAddToCart(el)}*/}
-            {/*                onFavorite={(obj) => onAddToFavorite(el)}*/}
-            {/*            />)}*/}
+                {/*    <div className="sneakers">*/}
+                {/*        {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))*/}
+                {/*            .map((el,index) =>*/}
+                {/*            <Card*/}
+                {/*                id={el.id}*/}
+                {/*                key={index} title={el.title}*/}
+                {/*                price={el.price} imageURL={el.imageURL}*/}
+                {/*                favorites={el.favorites}*/}
+                {/*                onPlus={(obj) => onAddToCart(el)}*/}
+                {/*                onFavorite={(obj) => onAddToFavorite(el)}*/}
+                {/*            />)}*/}
 
-            {/*    </div>*/}
-            {/*</div>*/}
-        </div>
+                {/*    </div>*/}
+                {/*</div>*/}
+            </div>
+        </AppContext.Provider>
     );
 }
 
