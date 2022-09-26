@@ -1,13 +1,16 @@
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {ItemsType} from "../App";
 import {Card} from "../components/Card/Card";
+import {AppContext} from "../context/AppContext";
 
 type FavoritesPropsType = {
-    items: ItemsType[]
+    //items: ItemsType[]
     onFavorite: (obj: ItemsType) => void
 }
 
-export const Favorites: FC<FavoritesPropsType> = ({items,onFavorite}) => {
+export const Favorites: FC<FavoritesPropsType> = ({onFavorite}) => {
+    const {favorites} = useContext(AppContext)
+
     return (
 
         <div className="content">
@@ -16,8 +19,7 @@ export const Favorites: FC<FavoritesPropsType> = ({items,onFavorite}) => {
             </div>
 
             <div className="sneakers">
-                {items
-                    .map((el, index) =>
+                {favorites?.map((el, index) =>
                         <Card
                             id={el.id}
                             key={index} title={el.title}

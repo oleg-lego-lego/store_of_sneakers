@@ -193,7 +193,7 @@ function App() {
 
                     <Route path={'/favorites'} element={
                         <Favorites
-                            items={favorites}
+                            //items={favorites}
                             onFavorite={onAddToFavorite}
                         />}/>
 
