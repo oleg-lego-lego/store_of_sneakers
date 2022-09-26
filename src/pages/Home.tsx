@@ -2,6 +2,7 @@ import React, {ChangeEvent, FC} from 'react';
 import {Card} from "../components/Card/Card";
 import {ItemsType} from "../App";
 
+
 type HomePropsType = {
     items: ItemsType[]
     searchValue: string
@@ -10,9 +11,35 @@ type HomePropsType = {
     onAddToFavorite: (obj: ItemsType) => void
     onAddToCart: (obj: ItemsType) => void
     cartItems: ItemsType[]
+    isLoading: boolean
 }
 
-export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems}) => {
+export const Home: FC<HomePropsType> = (
+    {items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems, isLoading}) => {
+    const renderItems = () => {
+        const filteredItems = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+        return (
+            <>
+                {isLoading
+                    ? [...Array(8)]
+                    : filteredItems
+                        .map((el, index) =>
+                            <Card
+                                id={el.id}
+                                key={index} title={el.title}
+                                price={el.price} imageURL={el.imageURL}
+                                onPlus={(obj) => onAddToCart(el)}
+                                onFavorite={(obj) => onAddToFavorite(el)}
+                                //favorited={true}
+                                added={cartItems.some(f => Number(f.id) === Number(f.id))}
+                                loading={isLoading}
+                            />
+                            )
+                }
+            </>
+        )
+    }
+
     return (
         <div className="content">
             <div className={"titleSearch"}>
@@ -27,18 +54,7 @@ export const Home: FC<HomePropsType> = ({items, searchValue, setSearchValue, onC
             </div>
 
             <div className="sneakers">
-                {items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                    .map((el, index) =>
-                        <Card
-                            id={el.id}
-                            key={index} title={el.title}
-                            price={el.price} imageURL={el.imageURL}
-                            onPlus={(obj) => onAddToCart(el)}
-                            onFavorite={(obj) => onAddToFavorite(el)}
-                            //favorited={true}
-                            added={cartItems.some(f => Number(f.id) === Number(f.id))}
-                        />
-                    )}
+                {renderItems()}
             </div>
         </div>
     );
