@@ -16,6 +16,9 @@ type HomePropsType = {
 
 export const Home: FC<HomePropsType> = (
     {items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems, isLoading}) => {
+    //const {isItemAdded} = useContext(AppContext)
+
+
     const renderItems = () => {
         const filteredItems = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
         return (
@@ -31,10 +34,11 @@ export const Home: FC<HomePropsType> = (
                                 onPlus={(obj) => onAddToCart(el)}
                                 onFavorite={(obj) => onAddToFavorite(el)}
                                 //favorited={true}
-                                added={cartItems.some(f => Number(f.id) === Number(f.id))}
+                               // added={cartItems.some(f => Number(f.id) === Number(f.id))}
+                                //added={isItemAdded && isItemAdded(el.id)}
                                 loading={isLoading}
                             />
-                            )
+                        )
                 }
             </>
         )

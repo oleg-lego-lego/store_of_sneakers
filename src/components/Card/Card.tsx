@@ -1,7 +1,8 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import s from './Card.module.scss'
 import {ItemsType} from "../../App";
 import ContentLoader from "react-content-loader";
+import {AppContext} from "../../context/AppContext";
 
 type CardPropsType = {
     id: string
@@ -19,8 +20,12 @@ export const Card: FC<CardPropsType> = (
     {title, price, imageURL, id, onFavorite,
         onPlus, favorited = false, added = false,
     loading = false }) => {
-    const [isAdded, setIsAdded] = useState(added)
+
+    //const [isAdded, setIsAdded] = useState(added)
     const [isFavorite, setIsFavorite] = useState(favorited)
+
+    const {isItemAdded} = useContext(AppContext)
+
 
     //liked unliked fixed
 
@@ -37,12 +42,12 @@ export const Card: FC<CardPropsType> = (
         if (onPlus) {
             onPlus(obj)
         }
-        setIsAdded(!isAdded)
+        //setIsAdded(!isAdded)
     }
 
-    useEffect(() => {
-
-    }, [isAdded])
+    // useEffect(() => {
+    //
+    // }, [isAdded])
 
     return (
         <div className={s.card}>
@@ -76,7 +81,7 @@ export const Card: FC<CardPropsType> = (
                                 <b>{price}</b>
                             </div>
                             <img className={s.plus} onClick={onClickPlus}
-                                 src={isAdded ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
+                                 src={isItemAdded && isItemAdded(id) ? '/img/btn_checked.svg' : '/img/btn_plus.svg'} alt={'plus'}/>
                         </div>
                     </>
             }
