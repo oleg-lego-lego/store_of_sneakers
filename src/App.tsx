@@ -1,10 +1,11 @@
-import React, {ChangeEvent, createContext, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {Header} from "./components/Header";
 import {Drawer} from "./components/Drawer";
 import axios from "axios"
 import {Home} from "./pages/Home";
 import {Favorites} from "./pages/Favorites";
+import {AppContext} from "./context/AppContext";
 
 export type ItemsType = {
     id: string
@@ -100,7 +101,6 @@ const arr = [
     },
 ]
 
-const AppContext = createContext({})
 
 function App() {
     const [items, setItems] = useState<ItemsType[]>([])
@@ -173,7 +173,7 @@ function App() {
     }
 
     return (
-        <AppContext.Provider value={''}>
+        <AppContext.Provider value={{items, cartItems, favorites}}>
             <div className="wrapper clear">
                 {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
                 <Header onClickKart={() => setCartOpened(true)}/>
