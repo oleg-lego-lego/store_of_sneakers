@@ -1,5 +1,6 @@
 import React from 'react';
 import {ItemsType} from "../App";
+import {Info} from "./Info/Info";
 
 
 type DrawerPropsType = {
@@ -57,18 +58,16 @@ export const Drawer = ({onClose, items, onRemove}: { onClose: any; items: ItemsT
                             </div>
                         </>
                         :
-                        <div className="cartEmpty">
-                            <img className="emptyImage" src={'/img/empty-cart.jpg'} alt="EmptyCart"/>
-                            <h2>{'title'}</h2>
-                            <p>{'description'}</p>
-                            <button onClick={onClose} className="greenButton">
-                                <img className="imgArrow" src="img/arrow.svg" alt="Arrow"/>Вернуться назад
-                            </button>
-                        </div>
-
+                        <Info title={'корзина пуста'} description={'добавь хотябы одну пару кроссвок'} image={'/img/empty-cart.jpg'}/>
+                        // <div className="cartEmpty">
+                        //     <img className="emptyImage" src={'/img/empty-cart.jpg'} alt="EmptyCart"/>
+                        //     <h2>{'title'}</h2>
+                        //     <p>{'description'}</p>
+                        //     <button onClick={onClose} className="greenButton">
+                        //         <img className="imgArrow" src="img/arrow.svg" alt="Arrow"/>Вернуться назад
+                        //     </button>
+                        // </div>
                 }
-
-
             </div>
         </div>
     );
