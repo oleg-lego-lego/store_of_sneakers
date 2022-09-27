@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {ItemsType} from "../App";
 import {Info} from "./Info/Info";
 
 
 type DrawerPropsType = {
     onClose: any
-    items: any
+    items: ItemsType[]
+    onRemove: (id: string) => void
 }
 
-export const Drawer = ({onClose, items, onRemove}: { onClose: any; items: ItemsType[], onRemove: (id: string) => void }) => {
+export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
     return (
         <div className="overlay">
             <div className="drawer">
