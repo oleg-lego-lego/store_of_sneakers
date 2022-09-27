@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {ItemsType} from "../App";
 import {Info} from "./Info/Info";
-
+import {AppContext} from "../context/AppContext";
 
 type DrawerPropsType = {
     onClose: any
@@ -10,6 +10,15 @@ type DrawerPropsType = {
 }
 
 export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
+    const {setCartItems} = useContext(AppContext)
+
+    const [isOrderComplete, setIsOrderComplete] = useState(false)
+
+    const onClickOrder = () => {
+        setIsOrderComplete(true)
+        setCartItems && setCartItems([])
+    }
+
     return (
         <div className="overlay">
             <div className="drawer">
@@ -54,20 +63,25 @@ export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
                                         <b>1074 руб.</b>
                                     </li>
                                 </ul>
-                                <button className={"greenButton"}>Оформить заказ <img src="/src/img/img/arrow.svg"
-                                                                                      alt="arrow"/></button>
+                                <button onClick={onClickOrder} className={"greenButton"}>Оформить заказ <img
+                                    src="/src/img/img/arrow.svg"
+                                    alt="arrow"/></button>
                             </div>
                         </>
                         :
-                        <Info title={'корзина пуста'} description={'добавь хотябы одну пару кроссвок'} image={'/img/empty-cart.jpg'}/>
-                        // <div className="cartEmpty">
-                        //     <img className="emptyImage" src={'/img/empty-cart.jpg'} alt="EmptyCart"/>
-                        //     <h2>{'title'}</h2>
-                        //     <p>{'description'}</p>
-                        //     <button onClick={onClose} className="greenButton">
-                        //         <img className="imgArrow" src="img/arrow.svg" alt="Arrow"/>Вернуться назад
-                        //     </button>
-                        // </div>
+                        isOrderComplete
+                            ? <Info title={'Заказ оформлен!'} description={'Ваш заказ #18 скоро будет передан курьерской доставке'}
+                                    image={'img/completed-order.svg'}/>
+                            : <Info title={'корзина пуста'} description={'добавь хотябы одну пару кроссвок'}
+                                    image={'/img/empty-cart.jpg'}/>
+                    // <div className="cartEmpty">
+                    //     <img className="emptyImage" src={'/img/empty-cart.jpg'} alt="EmptyCart"/>
+                    //     <h2>{'title'}</h2>
+                    //     <p>{'description'}</p>
+                    //     <button onClick={onClose} className="greenButton">
+                    //         <img className="imgArrow" src="img/arrow.svg" alt="Arrow"/>Вернуться назад
+                    //     </button>
+                    // </div>
                 }
             </div>
         </div>
