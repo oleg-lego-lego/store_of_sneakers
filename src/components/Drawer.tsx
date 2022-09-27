@@ -2,6 +2,8 @@ import React, {FC, useContext, useState} from 'react';
 import {ItemsType} from "../App";
 import {Info} from "./Info/Info";
 import {AppContext} from "../context/AppContext";
+import axios from "axios"
+import {rejects} from "assert";
 
 type DrawerPropsType = {
     onClose: any
@@ -9,14 +11,35 @@ type DrawerPropsType = {
     onRemove: (id: string) => void
 }
 
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
-    const {setCartItems} = useContext(AppContext)
+    const {setCartItems, cartItems} = useContext(AppContext)
 
     const [isOrderComplete, setIsOrderComplete] = useState(false)
+    const [orderId, setOrderId] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const onClickOrder = () => {
-        setIsOrderComplete(true)
-        setCartItems && setCartItems([])
+    const onClickOrder = async () => {
+        try {
+            setIsLoading(true)
+            const {data} = await axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/orders', {items: cartItems})
+            //await axios.put('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', [])
+            setOrderId(data.id)
+            setIsOrderComplete(true)
+            setCartItems && setCartItems([])
+
+            for (let i = 0; i < Number(cartItems && cartItems.length); i++) {
+                const item = cartItems && cartItems[i]
+                axios.delete('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart' + item?.id).then()
+                await delay(1000)
+            }
+
+            //cartItems?.forEach(el => axios.delete('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart' + items.))
+        } catch (e) {
+            alert('Не удалось создать заказ :(')
+        }
+        setIsLoading(false)
     }
 
     return (
@@ -63,14 +86,14 @@ export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
                                         <b>1074 руб.</b>
                                     </li>
                                 </ul>
-                                <button onClick={onClickOrder} className={"greenButton"}>Оформить заказ <img
-                                    src="/src/img/img/arrow.svg"
-                                    alt="arrow"/></button>
+                                <button disabled={isLoading} onClick={onClickOrder} className={"greenButton"}>
+                                    Оформить заказ <img src="img/arrow.svg" alt="arrow"/>
+                                </button>
                             </div>
                         </>
                         :
                         isOrderComplete
-                            ? <Info title={'Заказ оформлен!'} description={'Ваш заказ #18 скоро будет передан курьерской доставке'}
+                            ? <Info title={'Заказ оформлен!'} description={`Ваш заказ #${orderId} скоро будет передан курьерской доставке`}
                                     image={'img/completed-order.svg'}/>
                             : <Info title={'корзина пуста'} description={'добавь хотябы одну пару кроссвок'}
                                     image={'/img/empty-cart.jpg'}/>
