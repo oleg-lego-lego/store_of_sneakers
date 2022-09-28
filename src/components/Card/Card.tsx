@@ -71,10 +71,12 @@ export const Card: FC<CardPropsType> = (
                     </ContentLoader>
                     :
                     <>
-                        <div className={s.favorite}>
-                            <img onClick={onClickFavorite} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'}
-                                 alt="unliked"/>
-                        </div>
+                        {onFavorite && (
+                            <div className={s.favorite}>
+                                <img onClick={onClickFavorite} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'}
+                                     alt="unliked"/>
+                            </div>
+                        )}
 
                         <img width={'100%'} height={135} src={imageURL} alt={'sneakers'}/>
                         <h5>{title}</h5>
@@ -83,9 +85,11 @@ export const Card: FC<CardPropsType> = (
                                 <span>Цена:</span>
                                 <b>{price}</b>
                             </div>
-                            <img className={s.plus} onClick={onClickPlus}
-                                 src={isItemAdded && isItemAdded(id) ? '/img/btn_checked.svg' : '/img/btn_plus.svg'}
-                                 alt={'plus'}/>
+                            {onPlus && (
+                                <img className={s.plus} onClick={onClickPlus}
+                                     src={isItemAdded && isItemAdded(id) ? '/img/btn_checked.svg' : '/img/btn_plus.svg'}
+                                     alt={'plus'}/>
+                            )}
                         </div>
                     </>
             }
