@@ -3,7 +3,6 @@ import {ItemsType} from "../App";
 import {Info} from "./Info/Info";
 import {AppContext} from "../context/AppContext";
 import axios from "axios"
-import {rejects} from "assert";
 
 type DrawerPropsType = {
     onClose: any
@@ -13,12 +12,16 @@ type DrawerPropsType = {
 
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
     const {setCartItems, cartItems} = useContext(AppContext)
 
     const [isOrderComplete, setIsOrderComplete] = useState(false)
     const [orderId, setOrderId] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
+
 
     const onClickOrder = async () => {
         try {
@@ -78,12 +81,12 @@ export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
                                     <li>
                                         <span>Итого:</span>
                                         <div></div>
-                                        <b>21 498 руб</b>
+                                        <b>{totalPrice} руб</b>
                                     </li>
                                     <li>
-                                        <span>Налог 5%:</span>
+                                        <span>Скидка 5%:</span>
                                         <div></div>
-                                        <b>1074 руб.</b>
+                                        <b>{totalPrice && Math.trunc(totalPrice / 100 * 5)} руб.</b>
                                     </li>
                                 </ul>
                                 <button disabled={isLoading} onClick={onClickOrder} className={"greenButton"}>
