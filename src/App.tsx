@@ -6,6 +6,7 @@ import axios from "axios"
 import {Home} from "./pages/Home";
 import {Favorites} from "./pages/Favorites";
 import {AppContext} from "./context/AppContext";
+import {Orders} from "./pages/Orders";
 
 export type ItemsType = {
     id: string
@@ -195,9 +196,8 @@ function App() {
                         />
                     }/>
 
-                    <Route path={'/favorites'} element={
-                        <Favorites/>
-                    }/>
+                    <Route path={'/favorites'} element={<Favorites/>}/>
+                    <Route path={'/orders'} element={<Orders/>}/>
 
                 </Routes>
             </div>

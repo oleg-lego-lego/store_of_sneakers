@@ -1,15 +1,15 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {NavLink} from "react-router-dom";
-import {AppContext} from "../context/AppContext";
+import {useCart} from "./hooks/useCart";
 
 type HeaderPropsType = {
     onClickKart: any
 }
 
 export const Header = (props: HeaderPropsType) => {
-    const {cartItems} = useContext(AppContext)
-    const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
-
+   // const {cartItems} = useContext(AppContext)
+    const {totalPrice} = useCart()
+    // const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
 
     return (
         <header>
@@ -23,7 +23,6 @@ export const Header = (props: HeaderPropsType) => {
                 </div>
             </NavLink>
 
-
             <ul className={"headerRight"}>
                 <li onClick={props.onClickKart}>
                     <img width={18} height={18} src="../img/cart.svg" alt="cart"/>
@@ -35,7 +34,9 @@ export const Header = (props: HeaderPropsType) => {
                     </NavLink>
                 </li>
                 <li>
-                    <img width={18} height={18} src="../img/user.svg" alt="user"/>
+                    <NavLink to="/orders">
+                        <img width={18} height={18} src="../img/user.svg" alt="user"/>
+                    </NavLink>
                 </li>
             </ul>
         </header>

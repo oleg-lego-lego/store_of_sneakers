@@ -1,8 +1,8 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {ItemsType} from "../App";
 import {Info} from "./Info/Info";
-import {AppContext} from "../context/AppContext";
 import axios from "axios"
+import {useCart} from "./hooks/useCart";
 
 type DrawerPropsType = {
     onClose: any
@@ -14,13 +14,15 @@ type DrawerPropsType = {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
-    const {setCartItems, cartItems} = useContext(AppContext)
+    // const {setCartItems, cartItems} = useContext(AppContext)
 
     const [isOrderComplete, setIsOrderComplete] = useState(false)
     const [orderId, setOrderId] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
+    const {cartItems, setCartItems, totalPrice} = useCart()
+
+    // const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
 
 
     const onClickOrder = async () => {
