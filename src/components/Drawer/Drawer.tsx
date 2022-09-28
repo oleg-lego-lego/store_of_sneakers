@@ -1,19 +1,21 @@
 import React, {FC, useState} from 'react';
-import {ItemsType} from "../App";
-import {Info} from "./Info/Info";
+import {ItemsType} from "../../App";
+import {Info} from "../Info/Info";
+import s from './Drawer.module.scss'
 import axios from "axios"
-import {useCart} from "./hooks/useCart";
+import {useCart} from "../hooks/useCart";
 
 type DrawerPropsType = {
     onClose: any
     items: ItemsType[]
     onRemove: (id: string) => void
+    opened: any
 }
 
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
+export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove, opened}) => {
     // const {setCartItems, cartItems} = useContext(AppContext)
 
     const [isOrderComplete, setIsOrderComplete] = useState(false)
@@ -48,8 +50,8 @@ export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove}) => {
     }
 
     return (
-        <div className="overlay">
-            <div className="drawer">
+        <div className={"overlay"}>
+            <div className={"drawer"}>
 
                 <h2>
                     Корзина

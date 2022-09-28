@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {Header} from "./components/Header";
-import {Drawer} from "./components/Drawer";
+import {Drawer} from "./components/Drawer/Drawer";
 import axios from "axios"
 import {Home} from "./pages/Home";
 import {Favorites} from "./pages/Favorites";
@@ -180,7 +180,7 @@ function App() {
     return (
         <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems, onAddToCart}}>
             <div className="wrapper clear">
-                {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
+                {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} opened={cartOpened}/>}
                 <Header onClickKart={() => setCartOpened(true)}/>
 
                 <Routes>
