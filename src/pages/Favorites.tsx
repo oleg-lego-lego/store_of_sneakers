@@ -23,6 +23,7 @@ export const Favorites: FC<FavoritesPropsType> = () => {
                             id={el.id}
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
+                            parentId={el.parentId}
                             favorited={true}
                             // onPlus={(obj) => onAddToCart(el)}
                             onFavorite={onFavorite}

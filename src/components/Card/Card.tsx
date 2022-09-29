@@ -9,6 +9,7 @@ type CardPropsType = {
     title: string
     price: number
     imageURL: string
+    parentId: number
     onFavorite?: (obj: ItemsType) => void
     onPlus?: (obj: ItemsType) => void
     favorited?: boolean
@@ -20,7 +21,7 @@ export const Card: FC<CardPropsType> = (
     {
         title, price, imageURL, id, onFavorite,
         onPlus, favorited = false,
-        loading = false
+        loading = false, parentId
     }) => {
 
     //const [isAdded, setIsAdded] = useState(added)
@@ -31,7 +32,7 @@ export const Card: FC<CardPropsType> = (
 
     //liked unliked fixed
 
-    const obj = {imageURL, title, price, id}
+    const obj = {imageURL, title, price, id, parentId}
 
     const onClickFavorite = () => {
         if (onFavorite) {

@@ -50,8 +50,8 @@ export const Drawer: FC<DrawerPropsType> = ({onClose, items, onRemove, opened}) 
     }
 
     return (
-        <div className={"overlay"}>
-            <div className={"drawer"}>
+        <div className={`${s.overlay} ${opened ? s.overlayVisible : ''}`}>
+            <div className={s.drawer}>
 
                 <h2>
                     Корзина

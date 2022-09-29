@@ -33,6 +33,7 @@ export const Home: FC<HomePropsType> = (
                                 price={el.price} imageURL={el.imageURL}
                                 onPlus={(obj) => onAddToCart(el)}
                                 onFavorite={(obj) => onAddToFavorite(el)}
+                                parentId={el.parentId}
                                 //favorited={true}
                                // added={cartItems.some(f => Number(f.id) === Number(f.id))}
                                 //added={isItemAdded && isItemAdded(el.id)}

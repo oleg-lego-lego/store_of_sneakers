@@ -13,6 +13,7 @@ export type ItemsType = {
     imageURL: string
     title: string
     price: number
+    parentId: number
 }
 
 const arr = [
@@ -21,14 +22,16 @@ const arr = [
         "favorites": false,
         "title": "Мужские Кроссовки Nike Blazer Mid Suede",
         "price": 12999,
-        "imageURL": "img/sneakers/1.jpg"
+        "imageURL": "img/sneakers/1.jpg",
+        "parentId": 1
     },
     {
         "id": "2",
         "favorites": false,
         "title": "Мужские Кроссовки Nike Air Max 270",
         "price": 12999,
-        "imageURL": "img/sneakers/2.jpg"
+        "imageURL": "img/sneakers/2.jpg",
+        "parentId": 2
     },
     {
         "id": "3",
@@ -113,36 +116,36 @@ function App() {
 
     useEffect(() => {
         async function fetchData() {
-            const cartResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
-            const favoritesResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites')
-            const itemsResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
+            try {
+                const cartResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
+                const favoritesResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites')
+                const itemsResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
 
-            setIsLoading(false)
+                setIsLoading(false)
 
-            setCartItems(cartResponse.data)
-            setFavorites(favoritesResponse.data)
-            setItems(itemsResponse.data)
+                setCartItems(cartResponse.data)
+                setFavorites(favoritesResponse.data)
+                setItems(itemsResponse.data)
+            } catch (e) {
+                alert('Ошибка при запросе данных :(')
+            }
         }
-
         fetchData()
-        //fetchData()
     }, [])
 
-    const onAddToCart = (obj: ItemsType) => {
+    const onAddToCart = async (obj: ItemsType) => {
+        const findItem = cartItems.find(el => Number(el.parentId) === Number(obj.id))
         try {
-            if (cartItems.find(el => Number(el.id) === Number(obj.id))) {
-                axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${obj.id}`)
-                    .then(() => {
-                    })
-                setCartItems(prev => prev.filter(el => Number(el.id) !== Number(obj.id)))
+            if (findItem) {
+                setCartItems(prev => prev.filter(el => Number(el.parentId) !== Number(obj.id)))
+                await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${findItem.id}`)
             } else {
-                axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', obj)
-                    .then(() => {
-                    })
                 setCartItems(prev => [...prev, obj])
+                const {data} = await axios.post('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart', obj)
+                setCartItems(prev => prev.map(el => (el.parentId === data.parentId) ? {...el, id: data.id} : el))
             }
         } catch (e) {
-
+            alert('Ошика при добавлении в корзину :(')
         }
     }
 
@@ -150,11 +153,13 @@ function App() {
         setSearchValue(e.currentTarget.value)
     }
 
-    const onRemoveItem = (id: string) => {
-        axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
-            .then(() => {
-            })
-        setCartItems(prev => prev.filter(item => item.id !== id))
+    const onRemoveItem = async (id: string) => {
+        try {
+            await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
+            setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
+        } catch (e) {
+            alert('Ошика при удалении из корзины :(')
+        }
     }
 
     const onAddToFavorite = async (obj: ItemsType) => {
@@ -174,13 +179,15 @@ function App() {
     }
 
     const isItemAdded = (id: string) => {
-        return cartItems.some(el => Number(el.id) === Number(id))
+        return cartItems.some(el => el.parentId === Number(id))
     }
 
     return (
-        <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems, onAddToCart}}>
+        <AppContext.Provider
+            value={{items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems, onAddToCart}}>
             <div className="wrapper clear">
-                {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} opened={cartOpened}/>}
+                {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}
+                                       opened={cartOpened}/>}
                 <Header onClickKart={() => setCartOpened(true)}/>
 
                 <Routes>
