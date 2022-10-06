@@ -73,9 +73,7 @@ function App() {
         try {
             setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
             await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
-
             //setCartItems(prev => prev.filter(item => item.parentId !== Number(id)))
-
         } catch (e) {
             alert('Ошика при удалении из корзины :(')
         }
