@@ -3,13 +3,11 @@ import {NavLink} from "react-router-dom";
 import {useCart} from "./hooks/useCart";
 
 type HeaderPropsType = {
-    onClickKart: any
+    onClickKart: () => void
 }
 
 export const Header = (props: HeaderPropsType) => {
-   // const {cartItems} = useContext(AppContext)
     const {totalPrice} = useCart()
-    // const totalPrice = cartItems?.reduce((sum, obj) => obj.price + sum, 0)
 
     return (
         <header>

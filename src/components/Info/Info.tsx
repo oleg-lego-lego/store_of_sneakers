@@ -5,7 +5,6 @@ type InfoPropsType = {
     title: string
     description: string
     image: string
-    //onclickClose: () => void
 }
 
 export const Info: FC<InfoPropsType> = ({title, description, image}) => {
@@ -16,7 +15,7 @@ export const Info: FC<InfoPropsType> = ({title, description, image}) => {
             <img className="emptyImage" src={image} alt="EmptyCart"/>
             <h2>{title}</h2>
             <p>{description}</p>
-            <button onClick={() => setCartOpened} className="greenButton">
+            <button onClick={() => setCartOpened && setCartOpened(false)} className="greenButton">
                 <img className="imgArrow" src="img/arrow.svg" alt="Arrow"/>Вернуться назад
             </button>
         </div>

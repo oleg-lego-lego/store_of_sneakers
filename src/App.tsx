@@ -27,27 +27,33 @@ function App() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const cartResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart')
-                const favoritesResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites')
-                const itemsResponse = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items')
+                const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
+                    axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/cart'),
+                    axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites'),
+                    axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/items'),
+                ]);
 
                 setIsLoading(false)
 
                 setCartItems(cartResponse.data)
                 setFavorites(favoritesResponse.data)
                 setItems(itemsResponse.data)
+
             } catch (e) {
                 alert('Ошибка при запросе данных :(')
             }
         }
+
+
         fetchData()
     }, [])
 
+
     const onAddToCart = async (obj: ItemsType) => {
-        const findItem = cartItems.find(el => Number(el.parentId) === Number(obj.id))
+        const findItem = cartItems.find(el => el.parentId === Number(obj.id))
         try {
             if (findItem) {
-                setCartItems(prev => prev.filter(el => Number(el.parentId) !== Number(obj.id)))
+                setCartItems(prev => prev.filter(el => el.parentId !== Number(obj.id)))
                 await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${findItem.id}`)
             } else {
                 setCartItems(prev => [...prev, obj])
@@ -65,23 +71,26 @@ function App() {
 
     const onRemoveItem = async (id: string) => {
         try {
-            await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
             setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
+            await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/cart/${id}`)
+
+            //setCartItems(prev => prev.filter(item => item.parentId !== Number(id)))
+
         } catch (e) {
             alert('Ошика при удалении из корзины :(')
         }
     }
 
     const onAddToFavorite = async (obj: ItemsType) => {
+        const findItem = favorites.find(el => el.parentId === Number(obj.id))
         try {
-            if (favorites.find(el => Number(el.id) === Number(obj.id))) {
-                axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/${obj.id}`)
-                    .then(() => {
-                    })
-                setFavorites(prev => prev.filter(item => Number(item.id) !== Number(obj.id)))
+            if (findItem) {
+                setFavorites(prev => prev.filter(item => item.parentId !== Number(obj.id)))
+                await axios.delete(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/${obj.id}`)
             } else {
+                setFavorites((prev) => [...prev, obj])
                 const {data} = await axios.post(`https://6328ab4ecc4c264fdedfb384.mockapi.io/favorites/`, obj)
-                setFavorites((prev) => [...prev, data])
+                setFavorites(prev => prev.map(el => (el.parentId === data.parentId) ? {...el, id: data.id} : el))
             }
         } catch (e) {
             alert('Не удалось добавить в закладки')
@@ -93,11 +102,13 @@ function App() {
     }
 
     return (
-        <AppContext.Provider
-            value={{items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems, onAddToCart}}>
-            <div className="wrapper clear">
+        <AppContext.Provider value={
+            {items, cartItems, favorites, isItemAdded, setCartOpened, setCartItems, onAddToCart}}>
+
+            <div className={"wrapper clear"}>
                 {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}
                                        opened={cartOpened}/>}
+
                 <Header onClickKart={() => setCartOpened(true)}/>
 
                 <Routes>

@@ -4,24 +4,21 @@ import {ItemsType} from "../App";
 import {Card} from "../components/Card/Card";
 import {AppContext} from "../context/AppContext";
 
-type OrdersPropsType = {
-    //items: ItemsType[]
-    //onFavorite: (obj: ItemsType) => void
-}
+type OrdersPropsType = {}
 
-export const Orders: FC<OrdersPropsType> = () => {
-    const {onFavorite, onAddToCart} = useContext(AppContext)
+export const Orders: FC<OrdersPropsType> = ({}) => {
+    const {onFavorite} = useContext(AppContext)
 
     const [orders, setOrders] = useState<ItemsType[]>([])
-    const [isLoading, setIsLoading] = useState(true)
+    const [Loading, setLoading] = useState(true)
 
 
     useEffect(() => {
         (async () => {
             try {
-                const {data} = await axios.get(`https://6328ab4ecc4c264fdedfb384.mockapi.io/orders`)
+                const {data} = await axios.get('https://6328ab4ecc4c264fdedfb384.mockapi.io/orders')
                 setOrders(data.reduce((prev: ItemsType[], obj: { items: ItemsType[] }) => [...prev, ...obj.items], []))
-                setIsLoading(false)
+                setLoading(false)
             } catch (e) {
                 alert('Ошибка при запросе заказов')
                 console.log(e)
@@ -37,16 +34,15 @@ export const Orders: FC<OrdersPropsType> = () => {
             </div>
 
             <div className={"sneakers"}>
-                {(isLoading
+                {Loading
                     ? [...Array(8)]
-                    : orders).map((el, index) =>
+                    : orders.map((el, index) =>
                         <Card
                             id={el.id}
                             key={index} title={el.title}
                             price={el.price} imageURL={el.imageURL}
                             parentId={el.parentId}
-                            favorited={true}
-                            // onPlus={(obj) => onAddToCart(el)}
+                            favorite={true}
                             onFavorite={onFavorite}
                         />
                     )}

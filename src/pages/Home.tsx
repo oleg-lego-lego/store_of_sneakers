@@ -15,33 +15,25 @@ type HomePropsType = {
 }
 
 export const Home: FC<HomePropsType> = (
-    {items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems, isLoading}) => {
-    //const {isItemAdded} = useContext(AppContext)
-
+    {items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, isLoading}) => {
 
     const renderItems = () => {
         const filteredItems = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+
         return (
-            <>
-                {isLoading
-                    ? [...Array(8)]
-                    : filteredItems
-                        .map((el, index) =>
-                            <Card
-                                id={el.id}
-                                key={index} title={el.title}
-                                price={el.price} imageURL={el.imageURL}
-                                onPlus={(obj) => onAddToCart(el)}
-                                onFavorite={(obj) => onAddToFavorite(el)}
-                                parentId={el.parentId}
-                                //favorited={true}
-                               // added={cartItems.some(f => Number(f.id) === Number(f.id))}
-                                //added={isItemAdded && isItemAdded(el.id)}
-                                loading={isLoading}
-                            />
-                        )
-                }
-            </>
+            isLoading
+                ? [...Array(8)]
+                : filteredItems.map((el, index) =>
+                    <Card
+                        id={el.id}
+                        key={index} title={el.title}
+                        price={el.price} imageURL={el.imageURL}
+                        onPlus={(obj) => onAddToCart(el)}
+                        onFavorite={() => onAddToFavorite(el)}
+                        parentId={el.parentId}
+                        isLoading={isLoading}
+                    />
+                )
         )
     }
 
